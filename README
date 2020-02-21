@@ -1,0 +1,74 @@
+Duta Viorel-Ionut 321CB
+
+	Pentru implementarea acestei teme am construit toate clasele specificate in
+enuntul temei, clasa Memorie in care declar memoria principala si metodele cu 
+cu care o accesez si folosesc (introduc, caut si elimin un element) si clasa 
+Read in care accesez si folosesc restul claselor.
+	Clasele Subscriptie, Free, Basic si Premium au un String pe care il folosesc
+pentru memorarea numelelui elementului, o variabila de tip int in care memorez
+numarul de accesari al fiecarui element din memoria cache pentru a stabili ce
+element o sa fie eliminat la apelul functiei remove() pentru memoria LFUCache.
+In functie de tipul elementului (Basic sau PRemium), in clasa mai am un intreb
+nr_b si nr_b pentru elemente cu accesari basic, respectiv premium. Metoda 
+"public String class_element()" prezenta in prezenta in cele 3 clase nonabstracte
+este apelata pentru a afla tipul elementului din memorii. In cazul in care nu mai
+sunt posibile accesarile superioare, urc in lantul de mostenire folosind super().
+	In continuare am sa explic folosirea metodei "public Subscriptie findName(
+String name)". Aceasta metoda este implementata in memoria principala, dar si in
+memoriile de tip cache. Folosind un iterator parcurg lista si cand am gasit
+elementul cu numele identic cu name il returnez, iar in cazul in care acesta nu
+este gasit, introc null. Este necesara o cautare a elementelor folosind numele
+obiectelor pe post de cheie pentru ca acesta este specific fiecarui element.
+	Memoriile cache de tip FIFO si LRU au o impelmentare identica datorita
+folosirii in tema a unei liste de tipul ArrayList<>(). De fiecare data cand un
+element este eliminat din interiorul unei liste, se refac legaturile, iar
+ordinea elementelor ramane aceeasi. Cum inserarea folosind metoda add() se face
+sfarsitul lisei, primul element va fi mereu cel mai vechi. Diferenta dintre
+aceste memorii si elementul care se elimina se gaseste in clasa Read, unde de
+fiecare data cand fac GET de un element ce este deja in cache, il scot si il
+inserez iar pentru a modifica "timestepul" acestuia. Pornind de la scheletul
+comun al memoriilor de tip cache si intregul lfu, la fiecare instructiune GET
+cresc intregul. Cand un element este scos din cache (insiferent daca este vorba
+de remove() sau remove(String name)), numarul lfu specic acestuia este adus la
+valoare initiala, zero. Un alt element comun celor trei calase este declararea
+si initializarea memoriei cache, aceasta fiind construita cu o capacitate maxima
+citita din fisierul de intrare.
+	Memoria principala este un ArrayList cu o capacitate "nelimitata" sau mai
+bine spus, nespecificata. Aceasta este extrem de similare in implementare cu 
+cele trei memorii prezentate mai sus.
+	Clasa care aduce toate elementele prezentate mai sus la un loc si face tema
+sa functuioneze este Read. Aceasta are in componenta un element de tip Memorie
+si trei metode, doua de ADD (Basic si Premium) si una in care citesc si scriu
+din fisiere si am randurile de cod corespunzatoare GET-ului. Daca scriam o
+functie separata pentru GET, prima functie din clasa avea cu 30 de ramnduri
+mai putin, dar per total ajungeam sa incarc mai mult clasa Read.
+Citirea din fisier o realizez folosind Scanner, iar scrierea cu PrintWriter.
+Dupa ce imi declar toate variabilele necesare citirii, citesc primele 3 randuri
+din fisier. In functie de ce scrie oe orimele doua imi construiesc memoria cache
+folosind un if ca sa aleg constructorul caruia ii dau ca parametru capacitatea
+acesteia.
+	Dupa ce am citit numarul de instructiuni din fisier, urmeaza un for in care
+citesc fiecare rand intr-un String, il impart folosind metoda predefinita split()
+in substring-uri intr-un vector de tipul String[]. In functie de lungimea 
+vectorului (2 pentru GET, 3 pentru ADD Basic si 4 pentru ADD Premium) stabilesc
+ce imi executa in continuare programul. Daca pentru lungimea de 3, respecitv 4
+doar apelez metoda ADD, in cazul in care trebuie sa fac GET, lucrurile satu putin
+diferit. Prima data imi declar doua elemente de tip Subscriptie si folosind al
+doilea element din vector (numele obiectului caruia trebuie sa ii aplic operatia
+GET), caut daca elementul este in memoria principala si/sau memorie cache.
+	Daca elementul este in memoria cache, acesta este implicit si in cea normala, 
+incrementez numarul lfu, verific daca memoria cache este de tip LRU pentru a
+modifica importanta acestuia in caz de eliminare, scriu in fisier 0 tipul acestuia,
+iar in cazul in care tipul este Basic sau Premium, decrementez numarul de accesari
+basic, respectiv premium.
+	In cazul in care primul if a intors false, urmeaza sa decid daca acesta este
+in memoria principala. Daca if-ul intoarce true, elementul meu este doar in 
+memoria principala asa ca trebuie sa scriu in fisier 1 plus tipul acestuia si sa
+decrementez accesarile de un anumit tip in cazul in care mai sunt disponibile.
+Pentru ca elementul nu se afla in cache, in urma acestei instructiuni de tipul
+GET, el va fi adaugat.
+	Ultimul caz ramas este cel in care ambele verificari de mai sus au intors 
+false, elementul ne fiind adaugat in memorie.
+	In incheiere, in urma temei am invatat sa folosesc incapsularea obiectelor,
+scrierea si citirea dintr-un fisier in java, folosirea mostenirii si a functiilor
+existente in java.

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"tema1","l":"Basic"},{"p":"tema1","l":"Cache"},{"p":"tema1","l":"FIFOCache"},{"p":"tema1","l":"Free"},{"p":"tema1","l":"LFUCache"},{"p":"tema1","l":"LRUCache"},{"p":"tema1","l":"Main"},{"p":"tema1","l":"Memorie"},{"p":"tema1","l":"Premium"},{"p":"tema1","l":"Read"},{"p":"tema1","l":"Subscriptie"}]
